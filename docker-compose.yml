@@ -4,9 +4,9 @@ services:
 
   nugurang-db:
     user: ${CUR_UID}
+    image: mariadb
     networks:
       - nugurang-net
-    image: mariadb
     container_name: nugurang-db
     environment:
       MYSQL_RANDOM_ROOT_PASSWORD: "yes"
@@ -41,9 +41,9 @@ services:
     depends_on:
       - nugurang-db
     user: ${CUR_UID}
+    image: phpmyadmin
     networks:
       - nugurang-net
-    image: phpmyadmin
     container_name: nugurang-dbadmin
     environment:
       PMA_HOST: "nugurang-db"
@@ -51,6 +51,18 @@ services:
       PMA_PASSWORD: "nugurang"
     ports:
       - "8002:80"
+
+  nugurang-proxy:
+    depends_on:
+      - nugurang-front
+      - nugurang-back
+    build: ./nugurang-proxy
+    networks:
+      - nugurang-net
+    container_name: nugurang-proxy
+    ports:
+      - "80:80"
+      - "443:443"
 
 volumes:
   nugurang-data:
