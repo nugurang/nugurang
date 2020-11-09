@@ -9,7 +9,6 @@ import Typography from '@material-ui/core/Typography';
 import Layout from '../../components/Layout';
 
 import BaseMultiSelect from '../../components/BaseMultiSelect';
-import PageTitleBar from '../../components/PageTitleBar';
 import SectionBox from '../../components/SectionBox';
 import SectionTitleBar from '../../components/SectionTitleBar';
 
@@ -35,6 +34,7 @@ const GET_TEAMMATES = gql`
         name
         getUsers(page: 0, pageSize: 100) {
           id
+          name
           image {
             id
             address
@@ -133,7 +133,7 @@ function PeerReviewIndex() {
     <Layout>
       <SectionTitleBar title="Peer review" backButton />
       {users.flat().map((item) => (
-        <SectionBox key={item.id} titleBar={<SectionTitleBar title={item.name} avatar={item.image} circleIcon="true" />}>
+        <SectionBox key={item.id} titleBar={<SectionTitleBar title={item.name} avatar={item.image.address} circleIcon="true" />}>
           <Grid container spacing={2}>
             <Grid item xs={12}>
               <Typography variant="body1">Did very well of...</Typography>
