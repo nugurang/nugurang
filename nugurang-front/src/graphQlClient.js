@@ -1,4 +1,4 @@
-import { from, ApolloClient, InMemoryCache, HttpLink } from '@apollo/client';
+import { ApolloClient, HttpLink, InMemoryCache, from } from '@apollo/client';
 import { onError } from "@apollo/client/link/error";
 import { BACKEND_ADDR } from './config';
 

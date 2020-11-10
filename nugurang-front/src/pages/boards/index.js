@@ -1,4 +1,4 @@
-import { useApolloClient , gql, useLazyQuery, useQuery } from "@apollo/client";
+import { gql , useApolloClient, useLazyQuery, useQuery } from "@apollo/client";
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 

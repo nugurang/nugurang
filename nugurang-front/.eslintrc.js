@@ -49,6 +49,7 @@ module.exports = {
     "react/jsx-one-expression-per-line": "warn",
     "react/jsx-props-no-spreading": "off",
     "react/prop-types": "off",
-    "react/react-in-jsx-scope": "off"
+    "react/react-in-jsx-scope": "off",
+    "sort-imports": "warn"
   }
 };

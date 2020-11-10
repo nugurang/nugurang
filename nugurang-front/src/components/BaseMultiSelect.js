@@ -9,7 +9,7 @@ export default function BaseMultiSelect({ items, label, onChange, placeholder=nu
       multiple
       onChange={onChange}
       options={items}
-      getOptionLabel={option => option.label}
+      getOptionLabel={option => option.name}
       filterSelectedOptions
       renderInput={params => (
         <TextField

@@ -1,4 +1,4 @@
-/* import { gql, useQuery } from '@apollo/client'; */
+import { gql, useQuery } from '@apollo/client';
 import { useRouter } from 'next/router';
 import React from 'react';
 import Box from '@material-ui/core/Box';
@@ -13,6 +13,37 @@ import PageTitleBar from '../../components/PageTitleBar';
 import SectionBox from '../../components/SectionBox';
 import SectionTitleBar from '../../components/SectionTitleBar';
 
+import Loading from '../../components/Loading';
+import GraphQlError from '../../components/GraphQlError';
+import withAuth from '../../components/withAuth';
+
+const GET_POSITIONS = gql`
+  query getPostion{
+    positions{
+      id
+      name
+    }
+  }
+`
+
+const GET_TEAMMATES = gql`
+  query {
+    currentUser {
+      id
+      getTeams(page: 0, pageSize: 100) {
+        id
+        name
+        getUsers(page: 0, pageSize: 100) {
+          id
+          image {
+            id
+            address
+          }
+        }
+      }
+    }
+  }
+`;
 
 const TEST_POSITION_LIST = [
   {
@@ -81,18 +112,33 @@ const TEST_USER_LIST = [
 
 
 
-export default function PeerReviewIndex() {
+function PeerReviewIndex() {
   const router = useRouter();
+  const responses = [
+    useQuery(GET_POSITIONS),
+    useQuery(GET_TEAMMATES),
+  ]
+  const errorResponse = responses.find((response) => response.error)
+
+  if (errorResponse)
+    return <GraphQlError error={errorResponse.error} />
+
+  if (responses.some((response) => response.loading))
+    return <Loading />;
+
+  const Positions = responses[0].data.positions
+  const users = responses[1].data.currentUser.getTeams ? responses[1].data.currentUser.getTeams[0].getUsers : null;
+
   return (
     <Layout>
-      <PageTitleBar title="Peer review" backButton />
-      {TEST_USER_LIST.flat().map((item) => (
+      <SectionTitleBar title="Peer review" backButton />
+      {users.flat().map((item) => (
         <SectionBox key={item.id} titleBar={<SectionTitleBar title={item.name} avatar={item.image} circleIcon="true" />}>
           <Grid container spacing={2}>
             <Grid item xs={12}>
               <Typography variant="body1">Did very well of...</Typography>
               <BaseMultiSelect
-                items={TEST_POSITION_LIST}
+                items={Positions}
                 label="Position"
                 placeholder="Select position"
               />
@@ -100,7 +146,7 @@ export default function PeerReviewIndex() {
             <Grid item xs={12}>
               <Typography variant="body1">Needs to go the extra mile to...</Typography>
               <BaseMultiSelect
-                items={TEST_POSITION_LIST}
+                items={Positions}
                 label="Position"
                 placeholder="Select position"
               />
@@ -115,3 +161,5 @@ export default function PeerReviewIndex() {
     </Layout>
   );
 }
+
+export default withAuth(PeerReviewIndex);

@@ -799,6 +799,70 @@ const USER_INFO_CARD_USER = {
   },
 };
 
+const WORK_INFO_BOX_WORK = {
+  id: 0,
+  name: "Test work",
+  opened: true,
+  tasks: [
+    {
+      id: 0,
+      name: "Test work 1",
+      difficurty: 1,
+      order: 0,
+      progress: {
+        id: 0,
+        name: "Test progress",
+      },
+      honors: [
+        {
+          honor: 10,
+          position: {
+            id: 0,
+            name: "Test position",
+          }
+        }
+      ]
+    },
+    {
+      id: 1,
+      name: "Test work 2",
+      difficurty: 2,
+      order: 1,
+      progress: {
+        id: 0,
+        name: "Test progress",
+      },
+      honors: [
+        {
+          honor: 10,
+          position: {
+            id: 0,
+            name: "Test position",
+          }
+        }
+      ]
+    },
+    {
+      id: 2,
+      name: "Test work 3",
+      difficurty: 3,
+      order: 2,
+      progress: {
+        id: 0,
+        name: "Test progress",
+      },
+      honors: [
+        {
+          honor: 10,
+          position: {
+            id: 0,
+            name: "Test position",
+          }
+        }
+      ]
+    },
+  ],
+};
 
 const WORK_INFO_BOX_WORK = {
   id: 0,
@@ -1034,7 +1098,8 @@ export default function ComponentOverview() {
           )
           : (
             <Typography>Deactivated</Typography>
-          )}
+          )
+        }
       </Overview>
 
       <Overview title="BaseTabs">
