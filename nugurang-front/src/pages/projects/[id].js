@@ -70,7 +70,7 @@ function ProjectInfo() {
       <PageTitleBar title="Project info" backButton="true" backButtonLink={`/teams/${project.team.id}`}>
         <Button onClick={() => router.push({pathname: "/works/create", query: { project: router.query.id }})}>Create work</Button>
       </PageTitleBar>
-      
+
       <SectionBox border={false}>
         <ProjectInfoBox project={project} />
       </SectionBox>
