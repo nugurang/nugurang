@@ -187,12 +187,15 @@ function Update() {
             <form
               onSubmit={async (e) => {
                 e.preventDefault();
-                let image;
+                let newImage;
+                const Name = newName.current.value;
+                const Email = newEmail.current.value;
+                const Bio = newBiography.current.value;
                 if (newImageAddress.current.value) {
                   const res = await createImage({ variables: { address: newImageAddress.current.value }});
-                  image = res.data.createImage.id;
+                  newImage = res.data.createImage.id;
                 }
-                await updateUser({ variables: { user: { name: newName.current.value, email: newEmail.current.value, biography: newBiography.current.value, image }}});
+                await updateUser({ variables: { user: { name: Name, email: Email, biography: Bio, image: newImage }}});
                 router.push(`/user/${user.id}`);
               }}
             >
